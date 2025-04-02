@@ -18,9 +18,9 @@
         <main class="mt-8 p-4">
             <h1 class="text-xl font-medium mb-4">Shortcuts</h1>
             <div class="flex items-center gap-4">
-                <a href="/users" class="bg-blue-500 text-white rounded-full py-2 px-4 hover:bg-blue-600 hover:text-neutral-100 cursor-pointer transition-all">Create new user</a>
-                <a href="/customers" class="bg-blue-500 text-white rounded-full py-2 px-4 hover:bg-blue-600 hover:text-neutral-100 cursor-pointer transition-all">Create customer</a>
-                <a href="/sales" class="bg-blue-500 text-white rounded-full py-2 px-4 hover:bg-blue-600 hover:text-neutral-100 cursor-pointer transition-all">Create sale</a>
+                <a href="/users/create" class="bg-blue-500 text-white rounded-full py-2 px-4 hover:bg-blue-600 hover:text-neutral-100 cursor-pointer transition-all">Create user</a>
+                <a href="/customers/create" class="bg-blue-500 text-white rounded-full py-2 px-4 hover:bg-blue-600 hover:text-neutral-100 cursor-pointer transition-all">Create customer</a>
+                <a href="/sales/create" class="bg-blue-500 text-white rounded-full py-2 px-4 hover:bg-blue-600 hover:text-neutral-100 cursor-pointer transition-all">Create sale</a>
                 <a href="/reciepts" class="bg-blue-500 text-white rounded-full py-2 px-4 hover:bg-blue-600 hover:text-neutral-100 cursor-pointer transition-all">Show all reciepts</a>
             </div>
         </main>
