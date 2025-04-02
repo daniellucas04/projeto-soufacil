@@ -50,10 +50,10 @@ class UserController extends Controller
             $user->update($validated);
 
             session()->flash('success', 'User updated successfully!');
-            return redirect()->back()->with('success', 'User updated successfully!');
+            return redirect()->back();
         } catch (\Exception) {
             session()->flash('success', 'Cannot update the user. Try again.');
-            return redirect()->back()->with('error', 'Cannot update the user. Try again.');
+            return redirect()->back();
         }
     }
     
@@ -63,21 +63,22 @@ class UserController extends Controller
             $user->delete();
 
             session()->flash('success', 'User deleted successfully!');
-            return redirect()->back()->with('sucesss', 'Cannot update the user. Try again.');
+            return redirect()->back();
         } catch (\Exception) {
             session()->flash('error', 'Cannot delete the user. Try again.');
-            return redirect()->back()->with('error', 'Cannot delete the user. Try again.');
+            return redirect()->back();
         }
     }
 
     private function rules(?string $uuid = null) {
         $rules = [
             'name' => 'required|string|max:255',
-            'email' => 'required|email',
+            'email' => ['required', 'email', 'unique:users'],
         ];
     
         if (!empty($uuid)) {
             $rules['password'] = 'required|min:8|confirmed';
+            $rules['email'] = array_slice($rules['email'], 0, 2);
         }
 
         return $rules;
