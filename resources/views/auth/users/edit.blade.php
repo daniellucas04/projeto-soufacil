@@ -20,13 +20,13 @@
         <div class="grid grid-cols-2 gap-4">
             <div class="flex flex-col">
                 <label>Name</label>
-                <input type="text" name="name" class="flex-auto border border-neutral-400 bg-white rounded-md py-2 px-4 @error('name') border-red-500 @enderror" value={{ $user->name }}>
+                <input type="text" name="name" class="flex-auto border border-neutral-400 bg-white rounded-md py-2 px-4 @error('name') border-red-500 @enderror" value="{{ $user->name }}">
                 @error('name') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
 
             <div class="flex flex-col">
                 <label>E-mail</label>
-                <input type="email" name="email" class="flex-auto border border-neutral-400 bg-white rounded-md py-2 px-4 @error('email') border-red-500 @enderror" value={{ $user->email }}>        
+                <input type="email" name="email" class="flex-auto border border-neutral-400 bg-white rounded-md py-2 px-4 @error('email') border-red-500 @enderror" value="{{ $user->email }}">        
                 @error('email') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
         </div>
