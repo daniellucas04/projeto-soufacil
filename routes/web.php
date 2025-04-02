@@ -1,7 +1,16 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\ReceiptController;
+use App\Http\Controllers\SaleController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+
+// Public routes
+Route::get('/', [AuthController::class, 'index'])->name('login');
+Route::post('/login', [AuthController::class, 'login']);
+Route::get('/logout', [AuthController::class, 'logout']);
 
 // Private routes
 Route::middleware('auth')->group(function () {
@@ -9,24 +18,51 @@ Route::middleware('auth')->group(function () {
         return view('auth.dashboard');
     });
 
-    Route::get('/customers', function() {
-        return view('auth.customers.list');
+    Route::controller(CustomerController::class)->group(function () {
+        // FORMS
+        Route::get('/customers', 'index');
+        Route::get('/customers/create', 'create');
+        Route::get('/customers/{id}/edit', 'edit');
+
+        // REQUESTS
+        Route::post('/customers/create', 'store');
+        Route::put('/customers/{id}/edit', 'update');
+        Route::delete('/customers/{id}/destroy', 'destroy');
     });
 
-    Route::get('/sales', function() {
-        return view('auth.sales.list');
+    Route::controller(SaleController::class)->group(function () {
+        // FORMS
+        Route::get('/sales', 'index');
+        Route::get('/sales/create', 'create');
+        Route::get('/sales/{id}/edit', 'edit');
+
+        // REQUESTS
+        Route::post('/sales/create', 'store');
+        Route::put('/sales/{id}/edit', 'update');
+        Route::delete('/sales/{id}/destroy', 'destroy');
     });
 
-    Route::get('/reciepts', function() {
-        return view('auth.reciepts.list');
+    Route::controller(ReceiptController::class)->group(function () {
+        // FORMS
+        Route::get('/reciepts', 'index');
+        Route::get('/reciepts/create', 'create');
+        Route::get('/reciepts/{id}/edit', 'edit');
+
+        // REQUESTS
+        Route::post('/reciepts/create', 'store');
+        Route::put('/reciepts/{id}/edit', 'update');
+        Route::delete('/reciepts/{id}/destroy', 'destroy');
     });
 
-    Route::get('/users', function() {
-        return view('auth.users.list');
+    Route::controller(UserController::class)->group(function () {
+        // FORMS
+        Route::get('/users', 'index');
+        Route::get('/users/create', 'create');
+        Route::get('/users/{id}/edit', 'edit');
+
+        // REQUESTS
+        Route::post('/users/create', 'store');
+        Route::put('/users/{id}/edit', 'update');
+        Route::delete('/users/{id}/destroy', 'destroy');
     });
 });
-
-// Public routes
-Route::get('/', [AuthController::class, 'index'])->name('login');
-Route::post('/login', [AuthController::class, 'login']);
-Route::get('/logout', [AuthController::class, 'logout']);
