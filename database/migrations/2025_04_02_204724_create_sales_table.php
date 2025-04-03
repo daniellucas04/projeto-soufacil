@@ -19,7 +19,6 @@ return new class extends Migration
             $table->decimal('price', 10, 2);
             $table->integer('installment');
             $table->date('due_date');
-            $table->enum('status', ['Pending', 'Paid'])->default('Pending');
             $table->timestamps();
         });
     }
