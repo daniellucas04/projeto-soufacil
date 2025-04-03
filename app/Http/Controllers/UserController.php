@@ -12,7 +12,7 @@ class UserController extends Controller
     public function index(Request $request) {
         $filter = User::query();
 
-        if ($request->has('filter')) {
+        if ($request->has('filter') AND !empty($request->query('filter'))) {
             $filter->where('name', 'LIKE', "%{$request->query('filter')}%")
                 ->orWhere('email', 'LIKE', "%{$request->query('filter')}%");
         }

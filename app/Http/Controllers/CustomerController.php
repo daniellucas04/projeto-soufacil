@@ -11,7 +11,7 @@ class CustomerController extends Controller
     public function index(Request $request): View {
         $filter = Customer::query();
 
-        if ($request->has('filter')) {
+        if ($request->has('filter') AND !empty($request->query('filter'))) {
             $filter->where('name', 'LIKE', "%{$request->query('filter')}%")
                 ->orWhere('cpf_cnpj', 'LIKE', "%{$request->query('filter')}%");
         }

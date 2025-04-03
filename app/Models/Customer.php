@@ -8,7 +8,7 @@ use Illuminate\Notifications\Notifiable;
 
 class Customer extends Model
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
+    /** @use HasFactory<\Database\Factories\CustomerFactory> */
     use HasFactory, Notifiable;
 
     /**
@@ -22,4 +22,8 @@ class Customer extends Model
         'phone',
         'email',
     ];
+
+    public function sales() {
+        return $this->hasMany(Sale::class);
+    }
 }
