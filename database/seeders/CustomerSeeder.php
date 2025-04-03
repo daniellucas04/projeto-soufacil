@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Customer;
+use App\Models\Sale;
 use Illuminate\Database\Seeder;
 
 class CustomerSeeder extends Seeder
@@ -14,6 +15,7 @@ class CustomerSeeder extends Seeder
     {
         Customer::factory()
         ->count(50)
+        ->has(Sale::factory()->count(1))
         ->create();
     }
 }

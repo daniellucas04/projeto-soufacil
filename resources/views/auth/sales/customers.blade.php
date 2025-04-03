@@ -30,7 +30,6 @@
                 <th class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">Price (R$)</th>
                 <th class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">Due date</th>
                 <th class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">Sale date</th>
-                <th class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">Status</th>
                 <th class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">Actions</th>
             </tr>
         </thead>
@@ -41,11 +40,6 @@
                     <td class="p-2 whitespace-nowrap">{{ number_format($sale->price, 2, ',', '.') }}</td>
                     <td class="p-2 whitespace-nowrap">{{ date_format(new DateTime($sale->due_date), 'd/m/Y') }}</td>
                     <td class="p-2 whitespace-nowrap">{{ date_format(new DateTime($sale->created_at), 'd/m/Y H:i:s') }}</td>
-                    <td class="p-2 whitespace-nowrap">
-                        <span class="text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm border {{ $sale->status == 'Pending' ? 'bg-gray-100 text-gray-800' : 'bg-green-100 text-green-800' }}">
-                            {{ $sale->status }}
-                        </span>
-                    </td>
                     <td class="flex items-center gap-2 p-2 whitespace-nowrap">
                         <a href="/reciepts?filter={{ $sale->uuid }}" class="bg-emerald-500 py-1 px-2 rounded hover:bg-emerald-600 hover:text-neutral-100 transition-all">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
