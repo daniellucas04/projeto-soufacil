@@ -33,13 +33,12 @@ Route::middleware('auth')->group(function () {
     Route::controller(SaleController::class)->group(function () {
         // FORMS
         Route::get('/sales', 'index');
-        Route::get('/sales/create', 'create');
-        Route::get('/sales/{id}/edit', 'edit');
-
+        Route::get('/sales/customers', 'customers');
+        Route::get('/sales/{id}/create', 'create');
+        
         // REQUESTS
-        Route::post('/sales/create', 'store');
-        Route::put('/sales/{id}/edit', 'update');
-        Route::delete('/sales/{id}/destroy', 'destroy');
+        Route::post('/sales/{id}/create', 'store');
+        Route::post('/sales/{id}/receive', 'store');
     });
 
     Route::controller(ReceiptController::class)->group(function () {

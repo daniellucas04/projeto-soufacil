@@ -14,3 +14,19 @@ if (document.baseURI.includes('customers')) {
         }).mask(document.getElementById("phone"));
     });
 }
+
+if (document.baseURI.includes('sales')) {
+    document.addEventListener("DOMContentLoaded", function() {
+        Inputmask({
+            alias: "numeric",
+            prefix: "R$ ",
+            groupSeparator: ".",
+            radixPoint: ",",
+            autoGroup: true,
+            digits: 2,
+            digitsOptional: false,
+            rightAlign: false,
+            allowMinus: false,
+        }).mask(document.getElementById("price"));
+    });
+}
