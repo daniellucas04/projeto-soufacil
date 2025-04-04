@@ -44,7 +44,7 @@ class SaleController extends Controller
             Sale::create($validated);
 
             session()->flash('success', ReturnMessage::SALE_CREATED_SUCCESS->value);
-            return redirect('/sales/customers');
+            return redirect('/sales');
         } catch (\Exception $e) {
             session()->flash('error', ReturnMessage::SALE_CREATED_FAIL->value);
             return redirect()->back();

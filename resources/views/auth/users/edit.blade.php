@@ -46,7 +46,7 @@
         <div class="grid grid-cols-2 gap-4">
             @if ($user->role != 'master')
                 <div class="flex items-center gap-2">
-                    <input type="checkbox" id="role" name="role" class="border bodrder-neutral-400 @error('role') is-invalid @enderror">            
+                    <input type="checkbox" id="role" name="role" class="border bodrder-neutral-400 @error('role') is-invalid @enderror" {{ $user->role === 'admin' ? 'checked' : null }}>            
                     <label for="role">Admin <small class="text-neutral-500">(Check this box if the user will have Admin privileges)</small></label>
                     @error('role') <span class="text-red-500">{{ $message }}</span> @enderror
                 </div>
