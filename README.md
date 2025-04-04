@@ -82,8 +82,6 @@ composer run dev
 
 #### Observações
 
-- Ao editar um `Customer`, é provavel que o número de telefone esteja inválido. Isso ocorre pois a máscara e a validação impede que os números gerados pelo `fake()` estejam em um formato diferente do brasileiro. O mesmo ocorre com números como: (17) 99999-9999.
-
 - As `Vendas` estão sendo estruturadas da seguinte forma: Ao criar uma **Venda** para um **Consumidor** a tabela `sales` armazenará as informações gerais da **venda**. Informações como: **preço da parcela**, **data de pagamento da parcela** e **status da parcela** estão armazenados na tabela `receipts`.
 
 - A tela de recebimentos utiliza uma view MySQL `get_all_receipts` para facilitar a busca de dados de um **Recebimento**. Ao marcar um **recebimento** como pago, a alteração ocorre diretamento no recebimento da tabela `receipts`.
