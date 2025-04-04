@@ -43,9 +43,9 @@ class UserPolicy
      */
     public function delete(User $user, User $targetUser): bool
     {
-        if ($user->id === $targetUser->id)
+        if ($user->id == $targetUser->id) {
             return false;
-
+        }
         return $user->role === 'master';
     }
 
