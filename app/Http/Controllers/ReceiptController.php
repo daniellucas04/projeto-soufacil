@@ -14,7 +14,7 @@ class ReceiptController extends Controller
     public function index(Request $request): View {
         $filter = $this->executeFilter($request);
 
-        return view('auth.receipts.list', ['receipts' => $filter->simplePaginate()]);
+        return view('auth.receipts.list', ['receipts' => $filter->orderBy('sale_date', 'desc')->simplePaginate(10)]);
     }
 
     public function update(Request $request, string $uuid): RedirectResponse {

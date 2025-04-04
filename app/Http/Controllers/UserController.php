@@ -67,14 +67,15 @@ class UserController extends Controller
         }
     }
     
-    public function destroy(Request $request, string $uuid): RedirectResponse {
-        if ($request->user()->cannot('delete', User::class)) {
-            session()->flash('error', ReturnMessage::USER_DONT_HAVE_PERMISSION->value);
-            return redirect('/users');
-        }
-
+    public function destroy(Request $request, string $uuid): RedirectResponse { 
         try {
             $user = User::whereUuid($uuid)->firstOrFail();
+
+            if ($request->user()->cannot('delete', $user)) {
+                session()->flash('error', ReturnMessage::USER_DONT_HAVE_PERMISSION->value);
+                return redirect('/users');
+            }
+
             $user->delete();
 
             session()->flash('success', ReturnMessage::USER_DELETED_SUCCESS->value);
