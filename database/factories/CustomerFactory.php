@@ -20,7 +20,7 @@ class CustomerFactory extends Factory
         return [
             'name' => fake()->name(),
             'cpf_cnpj' => $this->generateCpfCnpj(),
-            'phone' => fake()->phoneNumber(),
+            'phone' => fake()->numerify('(##) 9####-####'),
             'email' => fake()->email(),
         ];
     }
