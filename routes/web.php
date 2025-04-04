@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CustomerController;
-use App\Http\Controllers\RecieptController;
+use App\Http\Controllers\ReceiptController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -38,15 +38,14 @@ Route::middleware('auth')->group(function () {
         
         // REQUESTS
         Route::post('/sales/{id}/create', 'store');
-        Route::post('/sales/{id}/receive', 'store');
     });
 
-    Route::controller(RecieptController::class)->group(function () {
+    Route::controller(ReceiptController::class)->group(function () {
         // FORMS
-        Route::get('/reciepts', 'index');
+        Route::get('/receipts', 'index');
 
         // REQUESTS
-        Route::put('/reciepts/{id}/edit', 'update');
+        Route::put('/receipts/{id}/receive', 'update');
     });
 
     Route::controller(UserController::class)->group(function () {

@@ -2,20 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\ReturnMessage;
 use App\Models\User;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
     public function index(Request $request) {
-        $filter = User::query();
-
-        if ($request->has('filter') AND !empty($request->query('filter'))) {
-            $filter->where('name', 'LIKE', "%{$request->query('filter')}%")
-                ->orWhere('email', 'LIKE', "%{$request->query('filter')}%");
-        }
+        $filter = $this->executeFilter($request);
 
         return view('auth.users.list', ['users' => $filter->simplePaginate(10)]);
     }
@@ -34,11 +31,11 @@ class UserController extends Controller
         try {
             User::create($validated);
 
-            session()->flash('success', 'User created successfully!');
-            return redirect()->back();
+            session()->flash('success', ReturnMessage::USER_CREATED_SUCCESS->value);
+            return redirect('/users');
         } catch (\Exception) {
-            session()->flash('error', 'Cannot create the user. Try again.');
-            return redirect()->back();
+            session()->flash('error', ReturnMessage::USER_CREATED_FAIL->value);
+            return redirect('/users');
         }
     }
     
@@ -49,11 +46,11 @@ class UserController extends Controller
             $user = User::whereUuid($uuid)->firstOrFail();
             $user->update($validated);
 
-            session()->flash('success', 'User updated successfully!');
-            return redirect()->back();
+            session()->flash('success', ReturnMessage::USER_UPDATED_SUCCESS->value);
+            return redirect('/users');
         } catch (\Exception) {
-            session()->flash('success', 'Cannot update the user. Try again.');
-            return redirect()->back();
+            session()->flash('error', ReturnMessage::USER_UPDATED_FAIL->value);
+            return redirect('/users');
         }
     }
     
@@ -62,11 +59,11 @@ class UserController extends Controller
             $user = User::whereUuid($uuid)->firstOrFail();
             $user->delete();
 
-            session()->flash('success', 'User deleted successfully!');
-            return redirect()->back();
+            session()->flash('success', ReturnMessage::USER_DELETED_SUCCESS->value);
+            return redirect('/users');
         } catch (\Exception) {
-            session()->flash('error', 'Cannot delete the user. Try again.');
-            return redirect()->back();
+            session()->flash('error', ReturnMessage::USER_DELETED_FAIL->value);
+            return redirect('/users');
         }
     }
 
@@ -76,11 +73,23 @@ class UserController extends Controller
             'email' => ['required', 'email', 'unique:users'],
         ];
     
-        if (!empty($uuid)) {
+        if (empty($uuid)) {
             $rules['password'] = 'required|min:8|confirmed';
-            $rules['email'] = array_slice($rules['email'], 0, 2);
+        } else {
+            $rules['email'] = array_slice($rules['email'], 0, 2); // Remove a regra `unique` da validação
+        }
+        
+        return $rules;
+    }
+
+    private function executeFilter(Request $request): User|Builder {
+        $filter = User::query();
+
+        if ($request->has('filter') AND !empty($request->query('filter'))) {
+            $filter->where('name', 'LIKE', "%{$request->query('filter')}%")
+                ->orWhere('email', 'LIKE', "%{$request->query('filter')}%");
         }
 
-        return $rules;
+        return $filter;
     }
 }

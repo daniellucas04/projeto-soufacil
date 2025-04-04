@@ -21,7 +21,7 @@
                 <a href="/users/create" class="bg-blue-500 text-white rounded-full py-2 px-4 hover:bg-blue-600 hover:text-neutral-100 cursor-pointer transition-all">Create user</a>
                 <a href="/customers/create" class="bg-blue-500 text-white rounded-full py-2 px-4 hover:bg-blue-600 hover:text-neutral-100 cursor-pointer transition-all">Create customer</a>
                 <a href="/sales" class="bg-blue-500 text-white rounded-full py-2 px-4 hover:bg-blue-600 hover:text-neutral-100 cursor-pointer transition-all">Create sale</a>
-                <a href="/reciepts" class="bg-blue-500 text-white rounded-full py-2 px-4 hover:bg-blue-600 hover:text-neutral-100 cursor-pointer transition-all">Show all reciepts</a>
+                <a href="/receipts" class="bg-blue-500 text-white rounded-full py-2 px-4 hover:bg-blue-600 hover:text-neutral-100 cursor-pointer transition-all">Show all receipts</a>
             </div>
         </main>
     @endsection

@@ -2,19 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\ReturnMessage;
 use App\Models\Customer;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
 
 class CustomerController extends Controller
 {
     public function index(Request $request): View {
-        $filter = Customer::query();
-
-        if ($request->has('filter') AND !empty($request->query('filter'))) {
-            $filter->where('name', 'LIKE', "%{$request->query('filter')}%")
-                ->orWhere('cpf_cnpj', 'LIKE', "%{$request->query('filter')}%");
-        }
+        $filter = $this->executeFilter($request);
 
         return view('auth.customers.list', ['customers' => $filter->simplePaginate(10)]);
     }
@@ -29,34 +26,34 @@ class CustomerController extends Controller
 
     public function store(Request $request) {
         $validated = $request->validate($this->rules(), [
-            'phone.phone' => 'The phone field contains an invalid number'
+            'phone.phone' => ReturnMessage::CUSTOMER_PHONE_INVALID->value
         ]);
 
         try {
             Customer::create($validated);
 
-            session()->flash('success', 'Customer created successfully!');
-            return redirect()->back();
+            session()->flash('success', ReturnMessage::CUSTOMER_CREATED_SUCCESS->value);
+            return redirect('/customers');
         } catch (\Exception) {
-            session()->flash('error', 'Cannot create the customer. Try again.');
-            return redirect()->back();
+            session()->flash('error', ReturnMessage::CUSTOMER_CREATED_FAIL->value);
+            return redirect('/customers');
         }
     }
 
     public function update(Request $request, string $uuid) {
         $validated = $request->validate($this->rules($uuid), [
-            'phone.phone' => 'The phone field contains an invalid number'
+            'phone.phone' => ReturnMessage::CUSTOMER_PHONE_INVALID->value
         ]);
 
         try {
             $customer = Customer::whereUuid($uuid)->firstOrFail();
             $customer->update($validated);
 
-            session()->flash('success', 'Customer updated successfully!');
-            return redirect()->back();
-        } catch (\Exception $e) {
-            session()->flash('error', $e->getMessage());
-            return redirect()->back();
+            session()->flash('success', ReturnMessage::CUSTOMER_UPDATED_SUCCESS->value);
+            return redirect('/customers');
+        } catch (\Exception) {
+            session()->flash('error', ReturnMessage::CUSTOMER_UPDATED_FAIL->value);
+            return redirect('/customers');
         }
     }
     
@@ -66,10 +63,10 @@ class CustomerController extends Controller
             $customer->delete();
 
             session()->flash('success', 'Customer deleted successfully!');
-            return redirect()->back();
+            return redirect('/customers');
         } catch (\Exception) {
             session()->flash('error', 'Cannot delete the customer. Try again.');
-            return redirect()->back();
+            return redirect('/customers');
         }
     }
 
@@ -86,5 +83,16 @@ class CustomerController extends Controller
         }
 
         return $rules;
+    }
+
+    private function executeFilter(Request $request): Customer|Builder {
+        $filter = Customer::query();
+
+        if ($request->has('filter') AND !empty($request->query('filter'))) {
+            $filter->where('name', 'LIKE', "%{$request->query('filter')}%")
+                ->orWhere('cpf_cnpj', 'LIKE', "%{$request->query('filter')}%");
+        }
+
+        return $filter;
     }
 }

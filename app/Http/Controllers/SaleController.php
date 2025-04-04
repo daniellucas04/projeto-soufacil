@@ -2,14 +2,60 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\ReturnMessage;
 use App\Models\Customer;
 use App\Models\Sale;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 
 class SaleController extends Controller
 {
     public function index(Request $request): View {
+        $filter = $this->executeCustomerFilter($request);
+
+        return view('auth.sales.list', ['customers' => $filter->simplePaginate(10)]);
+    }
+
+    public function customers(Request $request): View {     
+        $filter = $this->executeSaleFilter($request);  
+
+        return view('auth.sales.customers', ['sales' => $filter->orderBy('sales.created_at', 'desc')->simplePaginate(10)]);
+    }
+
+    public function create(Request $request, string $uuid) {
+        return view('auth.sales.create', ['customer' => Customer::whereUuid($uuid)->firstOrFail(), 'maxInstallmentQuantity' => Sale::$maxInstallmentQuantity]);
+    }
+
+    public function store(Request $request, string $uuid) {
+        $data = $request->all();
+        $data['price'] = $this->preparePrice($data['price']);
+
+        $validated = validator($data, [
+            'price' => 'required|numeric|min:0.01',
+            'due_date' => 'required|date|after_or_equal:today',
+            'installment' => 'required|integer|min:1',
+        ])->validate();
+
+        try {
+            $customer = Customer::whereUuid($uuid)->firstOrFail();
+            $validated['customer_id'] = $customer->id;
+
+            Sale::create($validated);
+
+            session()->flash('success', ReturnMessage::SALE_CREATED_SUCCESS->value);
+            return redirect('/sales/customers');
+        } catch (\Exception $e) {
+            session()->flash('error', ReturnMessage::SALE_CREATED_FAIL->value);
+            return redirect()->back();
+        }
+    }
+
+    private function preparePrice(?string $price = null) {
+        return floatval(str_replace(['R$ ', '.', ',',], ['', '', '.'], $price)) ?? null;
+    }
+
+    private function executeCustomerFilter(Request $request): Customer|Builder {
         $filter = Customer::query();
 
         if ($request->has('filter')) {
@@ -19,10 +65,10 @@ class SaleController extends Controller
                 ->orWhere('cpf_cnpj', 'LIKE', "%{$request->query('filter')}%");
         }
 
-        return view('auth.sales.list', ['customers' => $filter->simplePaginate(10)]);
+        return $filter;
     }
 
-    public function customers(Request $request): View {        
+    private function executeSaleFilter(Request $request): Sale|Builder {
         $filter = Sale::query();
         $filter->join('customers', 'customers.id', '=', 'sales.customer_id');
 
@@ -37,39 +83,6 @@ class SaleController extends Controller
             ->orWhere('status', '=', $request->query('filter'));
         }
 
-        return view('auth.sales.customers', ['sales' => $filter->orderBy('sales.created_at', 'desc')->simplePaginate(10)]);
-    }
-
-    public function create(Request $request, string $uuid) {
-        return view('auth.sales.create', ['customer' => Customer::whereUuid($uuid)->firstOrFail(), 'maxInstallmentQuantity' => Sale::$maxInstallmentQuantity]);
-    }
-
-    public function store(Request $request, string $uuid) {
-        $data = $request->all();
-        $data['price'] = $this->preparePrice($data['price']);
-
-        $validated = $request->validate($data, [
-            'price' => 'required|numeric|min:0.01',
-            'due_date' => 'required|date|after_or_equal:today',
-            'installment' => 'required|integer|min:1',
-        ]);
-
-        try {
-            $customer = Customer::whereUuid($uuid)->firstOrFail();
-            Sale::create([
-                'customer_id' => $customer->id,
-                $data
-            ]);
-
-            session()->flash('success', "Sale created successfully for {$customer->name}!");
-            return redirect('/sales/customers');
-        } catch (\Exception $e) {
-            session()->flash('error', $e->getMessage());
-            return redirect()->back();
-        }
-    }
-
-    function preparePrice(?string $price = null) {
-        return floatval(str_replace(['R$ ', '.', ',',], ['', '', '.'], $price)) ?? null;
+        return $filter;
     }
 }

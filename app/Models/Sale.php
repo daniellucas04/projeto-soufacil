@@ -24,27 +24,29 @@ class Sale extends Model
         'price',
         'installment',
         'due_date',
-        'status',
     ];
 
+    /**
+     * Usa o instânciamento do Model para gerar as parcelas na tabela de recebimento
+     */
     protected static function boot() {
         parent::boot();
 
         static::created(function ($sale) {
-            $sale->generateReciepts();
+            $sale->generateReceipts();
         });
     } 
 
-    public function generateReciepts() {
+    public function generateReceipts() {
         $installmentPrice = ($this->price / $this->installment);
-        $dueDate = new \DateTime($this->due_date);
-        $installmentPaymentDate = $dueDate->format('Y-m-d'); // Data de pagamento da primeira parcela
+        $firstPaymentDate = new \DateTime($this->due_date);
+        $installmentPaymentDate = $firstPaymentDate->format('Y-m-d');
         
         for($i = 1; $i <= $this->installment; $i++) {
             if ($i > 1)
-                $installmentPaymentDate = $dueDate->modify("+1 month");
+                $installmentPaymentDate = $firstPaymentDate->modify("+1 month");
             
-            DB::table('reciepts')->insert([
+            DB::table('receipts')->insert([
                 'sale_id' => $this->id,
                 'price' => $installmentPrice,
                 'payment_date' => $installmentPaymentDate,
@@ -59,6 +61,6 @@ class Sale extends Model
     }
 
     public function receipts() {
-        return $this->hasMany(Reciept::class);
+        return $this->hasMany(Receipt::class);
     }
 }

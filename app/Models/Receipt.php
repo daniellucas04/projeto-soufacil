@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use App\Enums\ReceiptStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 
-class Reciept extends Model
+class Receipt extends Model
 {
-    /** @use HasFactory<\Database\Factories\RecieptFactory> */
+    /** @use HasFactory<\Database\Factories\ReceiptFactory> */
     use HasFactory, Notifiable;
 
     /**
