@@ -20,26 +20,26 @@
         <div class="grid grid-cols-2 gap-4">
             <div class="flex flex-col">
                 <label>Name</label>
-                <input type="text" name="name" class="flex-auto border border-neutral-400 bg-white rounded-md py-2 px-4 @error('name') border-red-500 @enderror" required>
+                <input type="text" name="name" class="flex-auto border border-neutral-400 bg-white rounded-md py-2 px-4 @error('name') is-invalid @enderror" required>
                 @error('name') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
 
             <div class="flex flex-col">
                 <label>E-mail</label>
-                <input type="email" name="email" class="flex-auto border border-neutral-400 bg-white rounded-md py-2 px-4 @error('email') border-red-500 @enderror" required>        
+                <input type="email" name="email" class="flex-auto border border-neutral-400 bg-white rounded-md py-2 px-4 @error('email') is-invalid @enderror" required>        
                 @error('email') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
         </div>
         <div class="grid grid-cols-2 gap-4">
             <div class="flex flex-col">
                 <label>Password</label>
-                <input type="password" name="password" class="flex-auto border border-neutral-400 bg-white rounded-md py-2 px-4 @error('password') border-red-500 @enderror" required>            
+                <input type="password" name="password" class="flex-auto border border-neutral-400 bg-white rounded-md py-2 px-4 @error('password') is-invalid @enderror" required>            
                 @error('password') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
 
             <div class="flex flex-col">
                 <label>Confirm password</label>
-                <input type="password" name="password_confirmation" class="flex-auto border border-neutral-400 bg-white rounded-md py-2 px-4 @error('password_confirmation') border-red-500 @enderror" required>
+                <input type="password" name="password_confirmation" class="flex-auto border border-neutral-400 bg-white rounded-md py-2 px-4 @error('password_confirmation') is-invalid @enderror" required>
                 @error('password') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
         </div>

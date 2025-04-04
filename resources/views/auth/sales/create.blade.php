@@ -6,11 +6,11 @@
         {{ session('success') ?? session('error') }}
     </div>
 
-    <script>
+    {{-- <script>
         setTimeout(() => {
             document.getElementById('alert-message').style.display = 'none';
         }, 3000); // Fecha após 3 segundos
-    </script>
+    </script> --}}
 @endif
 
 <div class="w-[95%] m-10 bg-neutral-100 border border-neutral-200 p-8 rounded-lg shadow">
@@ -22,13 +22,13 @@
         <div class="grid grid-cols-2 gap-4">
             <div class="flex flex-col">
                 <label>Price</label>
-                <input type="text" id="price" name="price" class="flex-auto border border-neutral-400 bg-white rounded-md py-2 px-4 @error('name') border-red-500 @enderror">
+                <input type="text" id="price" name="price" class="flex-auto border border-neutral-400 bg-white rounded-md py-2 px-4 @error('name') is-invalid @enderror">
                 @error('price') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
 
             <div class="flex flex-col">
                 <label>Installment</label>
-                <select name="installment" class="flex-auto border border-neutral-400 bg-white rounded-md py-2 px-4 @error('name') border-red-500 @enderror">
+                <select name="installment" class="flex-auto border border-neutral-400 bg-white rounded-md py-2 px-4 @error('name') is-invalid @enderror">
                     @for ($i = 1; $i <= $maxInstallmentQuantity; $i++)
                         <option value="{{ $i }}">{{ $i }}x</option>
                     @endfor
@@ -40,7 +40,7 @@
         <div class="grid grid-cols-1 gap-4">
             <div class="flex flex-col">
                 <label>Due date</label>
-                <input type="date" name="due_date" class="flex-auto border border-neutral-400 bg-white rounded-md py-2 px-4 @error('email') border-red-500 @enderror">        
+                <input type="date" name="due_date" class="flex-auto border border-neutral-400 bg-white rounded-md py-2 px-4 @error('email') is-invalid @enderror">        
                 @error('due_date') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
         </div>

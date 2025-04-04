@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\ReturnMessage;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -24,7 +25,7 @@ class AuthController extends Controller
 
         if (!Auth::attempt($validated)) {
             return back()->withErrors([
-                'all' => 'Falha ao realizar login. Tente novamente!',
+                'all' => ReturnMessage::FAILED_TO_LOGIN->value,
             ])->onlyInput('email');
         }
 

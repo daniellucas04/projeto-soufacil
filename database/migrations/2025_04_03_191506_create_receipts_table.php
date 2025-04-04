@@ -12,7 +12,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('reciepts', function (Blueprint $table) {
+        Schema::create('receipts', function (Blueprint $table) {
             $table->id();
             $table->uuid()->unique()->default(DB::raw('(UUID())'));
             $table->foreignId('sale_id')->constrained('sales')->onDelete('cascade');
@@ -22,20 +22,22 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        DB::statement("CREATE VIEW get_all_reciepts AS
+        DB::statement(
+            "CREATE OR REPLACE VIEW get_all_receipts AS
             	SELECT 
-                    reciepts.uuid AS reciept_code, 
+                    receipts.uuid AS receipt_code, 
                     sales.id AS sale_id, 
                     customers.name AS customer_name, 
                     customers.cpf_cnpj AS customer_document, 
                     sales.uuid AS sale_code, 
-                    reciepts.price AS reciept_price, 
-                    reciepts.payment_date AS payment_date, 
+                    receipts.price AS receipt_price, 
+                    receipts.payment_date AS payment_date, 
                     sales.created_at AS sale_date, 
-                    reciepts.status as reciept_status 
-                FROM reciepts
-                INNER JOIN sales ON sales.id = reciepts.sale_id 
-                INNER JOIN customers ON customers.id = sales.customer_id;");
+                    receipts.status as status 
+                FROM receipts
+                INNER JOIN sales ON sales.id = receipts.sale_id 
+                INNER JOIN customers ON customers.id = sales.customer_id;"
+        );
     }
 
     /**
@@ -44,6 +46,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('receipts');
-        DB::statement("DROP VIEW IF EXISTS get_all_reciepts");
+        DB::statement("DROP VIEW IF EXISTS get_all_receipts");
     }
 };
