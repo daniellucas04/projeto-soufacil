@@ -43,6 +43,15 @@
                 @error('password') <span class="text-red-500">{{ $message }}</span> @enderror
             </div>
         </div>
+        <div class="grid grid-cols-2 gap-4">
+            @if ($user->role != 'master')
+                <div class="flex items-center gap-2">
+                    <input type="checkbox" id="role" name="role" class="border bodrder-neutral-400 @error('role') is-invalid @enderror">            
+                    <label for="role">Admin <small class="text-neutral-500">(Check this box if the user will have Admin privileges)</small></label>
+                    @error('role') <span class="text-red-500">{{ $message }}</span> @enderror
+                </div>
+            @endif
+        </div>
         
         <div class="flex justify-end gap-4">
             <a href="/users" class="bg-white border border-neutral-400 text-neutral-800 py-2 px-4 rounded-lg hover:bg-neutral-100 hover:text-neutral-900 cursor-pointer transition-all">Cancel</a>

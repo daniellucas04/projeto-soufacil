@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\ReturnMessage;
+use App\Enums\UserRoles;
 use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
@@ -26,7 +27,13 @@ class UserController extends Controller
     }
 
     public function store(Request $request): RedirectResponse {
+        if ($request->user()->cannot('create', User::class)) {
+            session()->flash('error', ReturnMessage::USER_DONT_HAVE_PERMISSION->value);
+            return redirect('/users');
+        }
+
         $validated = $request->validate($this->rules());
+        $validated = $this->verifyUserRole($request, $validated);
 
         try {
             User::create($validated);
@@ -40,7 +47,13 @@ class UserController extends Controller
     }
     
     public function update(Request $request, string $uuid): RedirectResponse{
+        if ($request->user()->cannot('update', User::class)) {
+            session()->flash('error', ReturnMessage::USER_DONT_HAVE_PERMISSION->value);
+            return redirect('/users');
+        }
+
         $validated = $request->validate($this->rules($uuid));
+        $validated = $this->verifyUserRole($request, $validated);
 
         try {
             $user = User::whereUuid($uuid)->firstOrFail();
@@ -55,6 +68,11 @@ class UserController extends Controller
     }
     
     public function destroy(Request $request, string $uuid): RedirectResponse {
+        if ($request->user()->cannot('delete', User::class)) {
+            session()->flash('error', ReturnMessage::USER_DONT_HAVE_PERMISSION->value);
+            return redirect('/users');
+        }
+
         try {
             $user = User::whereUuid($uuid)->firstOrFail();
             $user->delete();
@@ -91,5 +109,14 @@ class UserController extends Controller
         }
 
         return $filter;
+    }
+
+    private function verifyUserRole(Request $request, array $data): array {
+        $data['role'] = UserRoles::USER->value;
+        if (isset($request->role) AND $request->role == 'on') {
+            $data['role'] = UserRoles::ADMIN->value;
+        }
+
+        return $data;
     }
 }
