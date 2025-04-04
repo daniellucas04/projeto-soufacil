@@ -27,7 +27,7 @@ npm install
 composer install
 ```
 
-- Copiar as variáveis de ambiente
+#### Copiar as variáveis de ambiente
 Antes de iniciar o projeto é necessário utilizar o arquivo `.env` para as Variáveis de ambiente que o sistema usa. Basta copiar o arquivo `.env.example` e renomear para `.env`.
 
 #### Gerar a chave de encriptação da aplicação
@@ -37,7 +37,7 @@ Antes de iniciar o projeto é necessário utilizar o arquivo `.env` para as Vari
 php artisan key:generate
 ```
 
-Nesse ponto o projeto está pronto para rodar. Mas antes é necessário rodar as `migrations` para o Banco de dados obtenha as tabelas padrões do framework e as tabelas que o sistema de gerenciamento utiliza.
+Nesse ponto o projeto está pronto para rodar. Mas antes é necessário rodar as `migrations` para que o Banco de dados obtenha as tabelas padrões do framework e as tabelas que o sistema utiliza.
 
 #### Migrations
 ```bash
