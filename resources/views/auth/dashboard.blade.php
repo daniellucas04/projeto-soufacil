@@ -18,10 +18,10 @@
         <main class="mt-8 p-4">
             <h1 class="text-xl font-medium mb-4">Shortcuts</h1>
             <div class="flex items-center gap-4">
-                <a href="/users/create" class="bg-blue-500 text-white rounded-full py-2 px-4 hover:bg-blue-600 hover:text-neutral-100 cursor-pointer transition-all">Create user</a>
-                <a href="/customers/create" class="bg-blue-500 text-white rounded-full py-2 px-4 hover:bg-blue-600 hover:text-neutral-100 cursor-pointer transition-all">Create customer</a>
-                <a href="/sales" class="bg-blue-500 text-white rounded-full py-2 px-4 hover:bg-blue-600 hover:text-neutral-100 cursor-pointer transition-all">Create sale</a>
-                <a href="/receipts" class="bg-blue-500 text-white rounded-full py-2 px-4 hover:bg-blue-600 hover:text-neutral-100 cursor-pointer transition-all">Show all receipts</a>
+                <a href="/users" class="bg-rose-400 text-white rounded-full py-2 px-4 hover:bg-rose-800 hover:text-neutral-100 cursor-pointer transition-all">Create user</a>
+                <a href="/customers" class="bg-rose-400 text-white rounded-full py-2 px-4 hover:bg-rose-800 hover:text-neutral-100 cursor-pointer transition-all">Create customer</a>
+                <a href="/sales" class="bg-rose-400 text-white rounded-full py-2 px-4 hover:bg-rose-800 hover:text-neutral-100 cursor-pointer transition-all">Create sale</a>
+                <a href="/receipts" class="bg-rose-400 text-white rounded-full py-2 px-4 hover:bg-rose-800 hover:text-neutral-100 cursor-pointer transition-all">Show receipts</a>
             </div>
         </main>
     @endsection

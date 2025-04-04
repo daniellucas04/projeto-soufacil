@@ -37,7 +37,9 @@
                 <th class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">Status</th>
                 <th class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">Receipt Code</th>
                 <th class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">Sale Code</th>
-                <th class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">Mark as paid</th>
+                <th class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">
+                    <span class="sr-only">Mark as paid</span>
+                </th>
             </tr>
         </thead>
         <tbody class="divide-y divide-gray-200">

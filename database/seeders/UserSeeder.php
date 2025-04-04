@@ -15,14 +15,27 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
+        // Default admin user
+        DB::table('users')->insert([
+            'name' => 'master',
+            'email' => 'master@email.com',
+            'role' => 'master',
+            'password' => Hash::make('master123'),
+            'created_at' => (new \DateTime()),
+            'updated_at' => (new \DateTime()),
+        ]);
+
         DB::table('users')->insert([
             'name' => 'admin',
             'email' => 'admin@email.com',
+            'role' => 'admin',
             'password' => Hash::make('admin123'),
+            'created_at' => (new \DateTime()),
+            'updated_at' => (new \DateTime()),
         ]);
 
         User::factory()
-        ->count(50)
-        ->create();
+            ->count(50)
+            ->create();
     }
 }

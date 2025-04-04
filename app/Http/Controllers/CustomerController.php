@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Enums\ReturnMessage;
 use App\Models\Customer;
 use Illuminate\Contracts\View\View;
-use Illuminate\Database\Query\Builder;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class CustomerController extends Controller

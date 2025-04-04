@@ -3,7 +3,8 @@
 namespace App\Enums;
 
 enum ReturnMessage: string {
-    case FAILED_TO_LOGIN        = 'Failed to login. Try again';
+    case FAILED_TO_LOGIN            = 'Failed to login. Try again';
+    case USER_DONT_HAVE_PERMISSION  = 'You dont have the right permission to execute this action.';
 
     case USER_CREATED_SUCCESS   = 'User created successfully';
     case USER_CREATED_FAIL      = 'Cannot create the user. Try again';

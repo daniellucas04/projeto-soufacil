@@ -5,22 +5,22 @@ namespace App\Http\Controllers;
 use App\Enums\ReturnMessage;
 use App\Models\Customer;
 use App\Models\Sale;
-use Illuminate\Database\Query\Builder;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 
 class SaleController extends Controller
 {
     public function index(Request $request): View {
+        $filter = $this->executeSaleFilter($request);  
+        
+        return view('auth.sales.list', ['sales' => $filter->orderBy('sales.created_at', 'desc')->simplePaginate(10)]);
+    }
+    
+    public function customers(Request $request): View {     
         $filter = $this->executeCustomerFilter($request);
 
-        return view('auth.sales.list', ['customers' => $filter->simplePaginate(10)]);
-    }
-
-    public function customers(Request $request): View {     
-        $filter = $this->executeSaleFilter($request);  
-
-        return view('auth.sales.customers', ['sales' => $filter->orderBy('sales.created_at', 'desc')->simplePaginate(10)]);
+        return view('auth.sales.customers', ['customers' => $filter->simplePaginate(10)]);
     }
 
     public function create(Request $request, string $uuid) {

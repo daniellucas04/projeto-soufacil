@@ -15,13 +15,12 @@
 
 <div class="w-[95%] m-10 bg-neutral-100 border border-neutral-200 p-8 rounded-lg shadow">
     <div class="flex justify-between mb-8">
-        <form method="get" class="flex gap-4 w-[25%]">
-            <input type="text" name="filter" placeholder="Filter by name, CPF/CNPJ or e-mail" class="flex-auto border border-neutral-400 bg-white rounded-md py-2 px-4">
+        <form method="get" class="flex gap-4 w-full">
+            <input type="text" name="filter" placeholder="Search customer by name, CPF/CNPJ, phone or e-mail" class="flex-auto border border-neutral-400 bg-white rounded-md py-2 px-4">
 
-            <button class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 hover:text-neutral-100 cursor-pointer transition-all">Filter</button>
+            <button type="submit" class="bg-blue-500 text-white text-sm py-2 px-4 rounded-full hover:bg-blue-600 hover:text-neutral-100 cursor-pointer transition-all">Search customer</button>
+            <a href="/customers/create" class="flex items-center bg-blue-500 text-white text-sm py-1 px-2 rounded-full hover:bg-blue-600 hover:text-neutral-100 cursor-pointer transition-all">Crate customer</a>
         </form>
-
-        <a href="/customers/create" class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 hover:text-neutral-100 cursor-pointer transition-all">Crate customer</a>
     </div>
 
     <table class="min-w-full divide-y divide-gray-200">
@@ -31,7 +30,9 @@
                 <th class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">CPF/CNPJ</th>
                 <th class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">Phone</th>
                 <th class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">E-mail</th>
-                <th class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">Actions</th>
+                <th class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">
+                    <span class="sr-only">Actions</span>
+                </th>
             </tr>
         </thead>
         <tbody class="divide-y divide-gray-200">
