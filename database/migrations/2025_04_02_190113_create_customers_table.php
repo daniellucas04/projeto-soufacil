@@ -15,10 +15,10 @@ return new class extends Migration
         Schema::create('customers', function (Blueprint $table) {
             $table->id();
             $table->uuid()->unique()->default(DB::raw('(UUID())'));
-            $table->string('name');
-            $table->string('cpf_cnpj')->unique();
-            $table->string('phone');
-            $table->string('email')->unique();
+            $table->string('name', 100);
+            $table->string('cpf_cnpj', 18)->unique();
+            $table->string('phone', 15);
+            $table->string('email', 100)->unique();
             $table->timestamps();
         });
     }
