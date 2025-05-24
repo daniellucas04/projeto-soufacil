@@ -1,7 +1,3 @@
-@php
-    use \App\Enums\UserRoles;
-@endphp
-
 @extends('auth.dashboard')
 @section('content')
 @if (session('success') || session('error'))
@@ -42,7 +38,6 @@
         </thead>
         <tbody class="divide-y divide-gray-200">
             @foreach ($users as $user)
-                @php $user->role = UserRoles::tryFrom($user->role) ?? UserRoles::USER; @endphp
                 <tr class="text-neutral-900 border-b-neutral-300 hover:bg-neutral-200 transition-all">
                     <td class="p-2 whitespace-nowrap">{{ ucfirst($user->name) }}</td>
                     <td class="p-2 whitespace-nowrap">{{ $user->email }}</td>
