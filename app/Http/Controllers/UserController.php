@@ -14,8 +14,15 @@ class UserController extends Controller
 {
     public function index(Request $request) {
         $filter = $this->executeFilter($request);
-
-        return view('auth.users.list', ['users' => $filter->simplePaginate(10)]);
+        
+        $users = $filter->paginate(10);
+        $users->get()
+            ->transform(function ($user) {
+                $user->role = UserRoles::tryFrom($user->role) ?? UserRoles::USER;
+                return $user;
+            });
+        
+        return view('auth.users.list', ['users' => $users]);
     }
 
     public function create(Request $request): View {
