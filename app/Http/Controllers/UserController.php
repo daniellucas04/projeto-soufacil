@@ -16,11 +16,10 @@ class UserController extends Controller
         $filter = $this->executeFilter($request);
         
         $users = $filter->paginate(10);
-        $users->get()
-            ->transform(function ($user) {
-                $user->role = UserRoles::tryFrom($user->role) ?? UserRoles::USER;
-                return $user;
-            });
+        $users->transform(function ($user) {
+                    $user->role = UserRoles::tryFrom($user->role) ?? UserRoles::USER;
+                    return $user;
+                });
         
         return view('auth.users.list', ['users' => $users]);
     }

@@ -1,4 +1,5 @@
 @extends('auth.dashboard')
+
 @section('content')
 @if (session('success') || session('error'))
     <div id="alert-message" class="p-3 rounded-lg m-10 text-center
